@@ -108,36 +108,41 @@ This experiment uses two approaches:
 | Thread Library | POSIX Pthreads |
 | Parallel Framework | OpenMP |
 | Editor | Nano |
-| Working Directory | `~/parallel_lab` |
 
 ---
 
 ## 4. Project Structure
 
 ```text
-parallel_lab/
+experiment2/
 │
-├── thread1.c          # Single thread creation
-├── thread2.c          # Multiple threads
-├── thread_sum.c       # Work distribution
-├── race.c             # Pthreads race condition
-├── mutex.c            # Mutex synchronization
-├── pthread_perf.c     # Pthreads performance
+├── pthreads/
+│   ├── thread1.c          # Single thread creation
+│   ├── thread2.c          # Multiple threads
+│   ├── thread_sum.c       # Work distribution
+│   ├── race.c             # Pthreads race condition
+│   └── mutex.c            # Mutex synchronization
 │
-├── omp1.c             # OpenMP parallel region
-├── omp_sum.c          # OpenMP work sharing and reduction
-├── omp_race.c         # OpenMP race condition
-├── omp_critical.c     # OpenMP critical section
-├── omp_barrier.c      # OpenMP barrier
-├── omp_perf.c         # OpenMP performance
+├── openmp/
+│   ├── omp1.c             # OpenMP parallel region
+│   ├── omp_sum.c          # OpenMP work sharing and reduction
+│   ├── omp_race.c         # OpenMP race condition
+│   ├── omp_critical.c     # OpenMP critical section
+│   └── omp_barrier.c      # OpenMP barrier
 │
-├── sequential.c       # Sequential baseline
+├── performance/
+│   ├── sequential.c       # Sequential baseline
+│   ├── pthread_perf.c     # Pthreads performance
+│   └── omp_perf.c         # OpenMP performance
 │
-├── images/
-│   ├── execution_time.png
-│   ├── speedup.png
-│   └── efficiency.png
+├── results/               # Saved program outputs
+├── results.txt            # Recorded results
 │
+├── execution_time.png     # Figure 1
+├── speedup.png            # Figure 2
+├── efficiency.png         # Figure 3
+│
+├── .gitignore
 └── README.md
 ```
 
@@ -589,15 +594,15 @@ This average is the **sequential baseline** used for speedup and efficiency.
 
 **Figure 1: Execution Time vs Number of Threads**
 
-![Execution Time vs Number of Threads](images/execution_time.png)
+![Execution Time vs Number of Threads](execution_time.png)
 
 **Figure 2: Speedup vs Number of Threads**
 
-![Speedup vs Number of Threads](images/speedup.png)
+![Speedup vs Number of Threads](speedup.png)
 
 **Figure 3: Efficiency vs Number of Threads**
 
-![Efficiency vs Number of Threads](images/efficiency.png)
+![Efficiency vs Number of Threads](efficiency.png)
 
 ### 8.6 Speedup Analysis
 
@@ -699,54 +704,56 @@ Both approaches support shared-memory parallel programming, but they provide dif
 
 ## 11. Compilation and Execution
 
+Run all commands from the repository folder that contains `pthreads/`, `openmp/` and `performance/`.
+
 ### Pthreads
 
 ```bash
 # Compile
-gcc thread1.c -o thread1 -pthread
-gcc thread2.c -o thread2 -pthread
-gcc thread_sum.c -o thread_sum -pthread
-gcc race.c -o race -pthread
-gcc mutex.c -o mutex -pthread
+gcc pthreads/thread1.c -o pthreads/thread1 -pthread
+gcc pthreads/thread2.c -o pthreads/thread2 -pthread
+gcc pthreads/thread_sum.c -o pthreads/thread_sum -pthread
+gcc pthreads/race.c -o pthreads/race -pthread
+gcc pthreads/mutex.c -o pthreads/mutex -pthread
 
 # Run
-./thread1
-./thread2
-./thread_sum
-./race
-./mutex
+./pthreads/thread1
+./pthreads/thread2
+./pthreads/thread_sum
+./pthreads/race
+./pthreads/mutex
 ```
 
 ### OpenMP
 
 ```bash
 # Compile
-gcc omp1.c -o omp1 -fopenmp
-gcc omp_sum.c -o omp_sum -fopenmp
-gcc omp_race.c -o omp_race -fopenmp
-gcc omp_critical.c -o omp_critical -fopenmp
-gcc omp_barrier.c -o omp_barrier -fopenmp
+gcc openmp/omp1.c -o openmp/omp1 -fopenmp
+gcc openmp/omp_sum.c -o openmp/omp_sum -fopenmp
+gcc openmp/omp_race.c -o openmp/omp_race -fopenmp
+gcc openmp/omp_critical.c -o openmp/omp_critical -fopenmp
+gcc openmp/omp_barrier.c -o openmp/omp_barrier -fopenmp
 
 # Run
-./omp1
-./omp_sum
-./omp_race
-./omp_critical
-./omp_barrier
+./openmp/omp1
+./openmp/omp_sum
+./openmp/omp_race
+./openmp/omp_critical
+./openmp/omp_barrier
 ```
 
 ### Performance Programs
 
 ```bash
 # Compile
-gcc sequential.c -o sequential
-gcc pthread_perf.c -o pthread_perf -pthread
-gcc omp_perf.c -o omp_perf -fopenmp
+gcc performance/sequential.c -o performance/sequential
+gcc performance/pthread_perf.c -o performance/pthread_perf -pthread
+gcc performance/omp_perf.c -o performance/omp_perf -fopenmp
 
 # Run
-./sequential
-./pthread_perf      # enter 1, 2, 4, 6, 16 when prompted
-./omp_perf          # enter 1, 2, 4, 6, 16 when prompted
+./performance/sequential
+./performance/pthread_perf      # enter 1, 2, 4, 6, 16 when prompted
+./performance/omp_perf          # enter 1, 2, 4, 6, 16 when prompted
 ```
 
 ---
