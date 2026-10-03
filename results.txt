@@ -1,0 +1,65 @@
+MULTITHREADED PROGRAMMING USING PTHREADS AND OPENMP
+====================================================
+
+Environment
+-----------
+OS: Ubuntu 24.04.4 LTS on WSL2
+GCC: 13.3.0
+OpenMP: GCC -fopenmp
+CPU threads available to OpenMP: 8
+
+CORE PROGRAM RESULTS
+--------------------
+
+Pthreads
+- thread1: Thread created and joined successfully
+- thread2: 4 threads created successfully
+- thread_sum: Total sum = 360
+- race: Expected = 400000, Actual = 358302
+- mutex: Expected = 400000, Actual = 400000
+
+OpenMP
+- omp1: 8 threads detected
+- omp_sum: Total sum = 360
+- omp_race: Expected = 400000, Actual = 100387
+- omp_critical: Expected = 400000, Actual = 400000
+- omp_barrier: All Stage 1 messages appeared before Stage 2
+
+PERFORMANCE RESULTS
+-------------------
+
+Sequential baseline:
+5.565676 seconds
+
+Pthreads:
+Threads    Time(s)    Speedup    Efficiency
+1          5.047552   1.1026     110.26%
+2          2.400156   2.3189     115.94%
+4          1.160360   4.7965     119.91%
+6          0.681312   8.1691     136.15%
+8          0.515806   10.7903    134.88%
+
+OpenMP:
+Threads    Time(s)    Speedup    Efficiency
+1          4.662678   1.1937     119.37%
+2          1.857468   2.9964     149.82%
+4          1.043935   5.3314     133.29%
+6          0.670657   8.2988     138.31%
+8          0.582004   9.5630     119.54%
+
+All performance runs produced:
+Result = 499999999500.00
+
+NOTE
+----
+Speedup was calculated using the sequential execution time:
+Speedup = Sequential time / Parallel time
+
+Efficiency was calculated as:
+Efficiency = Speedup / Number of threads * 100
+
+Some efficiencies exceed 100% because the separately compiled
+sequential program was slower than the 1-thread Pthreads/OpenMP
+versions on this WSL2 environment. The measured values are retained
+as actual experimental results rather than replacing them with sample
+values from the document.

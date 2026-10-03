@@ -1,0 +1,16 @@
+# Compiled executables
+pthreads/thread1
+pthreads/thread2
+pthreads/thread_sum
+pthreads/race
+pthreads/mutex
+
+openmp/omp1
+openmp/omp_sum
+openmp/omp_race
+openmp/omp_critical
+openmp/omp_barrier
+
+performance/sequential
+performance/pthread_perf
+performance/omp_perf
